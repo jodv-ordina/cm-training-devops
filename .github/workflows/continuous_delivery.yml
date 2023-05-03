@@ -1,0 +1,25 @@
+name: "continuous-integration"
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build-push-container:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "login to github"
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{github.actor}}
+          password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Build/Push container
+        run: |
+          docker build . --tag ghcr.io/jodv-ordina/math_api:latest
+          docker push ghcr.io/jodv-ordina/math_api:latest
