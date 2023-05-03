@@ -37,4 +37,4 @@ jobs:
           poetry install
       - name: run pytest
         run : |
-          pytest --cov=./ --cov-report=xml
+          poetry run pytest .
